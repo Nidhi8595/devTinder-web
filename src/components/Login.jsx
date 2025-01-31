@@ -26,7 +26,7 @@ const Login = () => {
         { withCredentials: true }
       );
       dispatch(addUser(res.data));
-      return navigate("/");
+      return navigate("/feed");
     } catch (err) {
       setError(err?.response?.data || "Something went wrong");
     }
@@ -47,8 +47,11 @@ const Login = () => {
   };
 
   return (
-    <div className="flex justify-center my-10">
-      <div className="card bg-base-300 w-96 shadow-xl">
+    <div className="flex justify-center text-white min-h-[500px]">
+      <div
+        className="card bg-lime-950 min-w-96
+       shadow-black shadow-2xl mb-10"
+      >
         <div className="card-body">
           <h2 className="card-title justify-center">
             {isLoginForm ? "Login" : "Sign Up"}
@@ -82,7 +85,7 @@ const Login = () => {
             )}
             <label className="form-control w-full max-w-xs my-2">
               <div className="label">
-                <span className="label-text">Email ID:</span>
+                <span className="label-text">Email ID</span>
               </div>
               <input
                 type="text"

@@ -31,17 +31,17 @@ const Requests = () => {
   }, []);
   if (!requests) return;
   if (requests.length === 0)
-    return <h1 className="flex justify-center my-10"> No Requests Found</h1>;
+    return <h1 className="text-bold text-center py-56 text-white text-3xl scale-y-110 min-h-[500px]"> No Requests Found</h1>;
   return (
-    <div className="text-center my-10">
-      <h1 className="text-bold text-white text-3xl">Connection Requests</h1>
+    <div className="text-center my-4 pb-2 min-h-[500px]">
+      <h1 className="text-bold text-white text-3xl scale-y-110">Connection Requests</h1>
       {requests.map((request) => {
         const { _id, firstName, lastName, photoUrl, age, gender, about } =
           request.fromUserId;
         return (
           <div
             key={_id}
-            className=" flex justify-between items-center m-4 p-4 rounded-lg bg-base-300  mx-auto"
+            className=" flex my-4 p-4 w-4/5 justify-between rounded-xl bg-red-200 mx-auto text-black shadow-slate-900 shadow-2xl"
           >
             <div>
               <img
@@ -50,22 +50,22 @@ const Requests = () => {
                 src={photoUrl}
               />
             </div>
-            <div className="text-left mx-4 ">
+            <div className="text-left ml-2 mr-1 ">
               <h2 className="font-bold text-xl">
                 {firstName + " " + lastName}
               </h2>
-              {age && gender && <p>{age + ", " + gender}</p>}
+              {age && gender && <p className="text-slate-700">{age + ", " + gender}</p>}
               <p>{about}</p>
             </div>
             <div>
             <button
-                className="btn btn-primary mx-2"
+                className="btn btn-primary m-1"
                 onClick={() => reviewRequest("rejected", request._id)}
               >
                 Reject
               </button>
               <button
-                className="btn btn-secondary mx-2"
+                className="btn btn-secondary m-1"
                 onClick={() => reviewRequest("accepted", request._id)}
               >
                 Accept

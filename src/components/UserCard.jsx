@@ -17,14 +17,14 @@ const UserCard = ({ user }) => {
     } catch (err) {}
   };
     return (
-      <div className="card bg-base-300 w-96 shadow-xl">
+      <div className="card bg-gray-100 w-96 shadow-2xl shadow-black text-black ml-1 mb-6">
         <figure>
           <img src={user.photoUrl} alt="photo" />
         </figure>
         <div className="card-body">
-          <h2 className="card-title">{firstName + " " + lastName}</h2>
-          {age && gender && <p>{age + ", " + gender}</p>}
-          <p>{about}</p>
+          <h2 className="card-title scale-y-110 font-bold">{firstName + " " + lastName}</h2>
+          {age && gender && <p className=" scale-y-105 ml-1">{age + " , " + gender}</p>}
+          <p className="font-medium">{about}</p>
           <div className="card-actions justify-center my-4">
           <button
             className="btn btn-primary"

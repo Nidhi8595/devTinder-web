@@ -19,11 +19,12 @@ const NavBar = () => {
   };
 
   return (
-    <div className="navbar bg-base-300">
+    <div className="navbar min-h-[70px] bg-slate-950 shadow-slate-950 shadow-lg pb-2 border-2 border-zinc-700 z-100 mb-5">
       <div className="flex-1">
         <Link to="/" className="btn btn-ghost text-xl">
           👩‍💻 DevTinder
         </Link>
+        {!user &&(<Link to="/login" className="btn absolute right-[30px] btn-ghost text-xl">Login</Link>)}
       </div>
       {user && (
         <div className="flex-none gap-2">
