@@ -16,31 +16,35 @@ const UserCard = ({ user }) => {
       dispatch(removeUserFromFeed(userId));
     } catch (err) {}
   };
-    return (
-      <div className="card bg-gray-100 w-96 shadow-2xl shadow-black text-black ml-1 mb-6">
-        <figure>
-          <img src={user.photoUrl} alt="photo" />
-        </figure>
-        <div className="card-body">
-          <h2 className="card-title scale-y-110 font-bold">{firstName + " " + lastName}</h2>
-          {age && gender && <p className=" scale-y-105 ml-1">{age + " , " + gender}</p>}
-          <p className="font-medium">{about}</p>
-          <div className="card-actions justify-center my-4">
+  return (
+    <div className="card bg-transparent md:w-96 w-4/5 shadow-[rgba(0,0,0,0.7)_0px_0px_10px_10px] text-black ml-1 mb-4">
+      <figure>
+        <img src={photoUrl} alt="photo" />
+      </figure>
+      <div className="card-body">
+        <h2 className="card-title  scale-y-110 text-shadow shadow-slate-700 font-mono text-2xl font-bold tracking-tighter ml-1">
+          {firstName + " " + lastName}
+        </h2>
+        {age && gender && (
+          <p className=" scale-y-105 font-medium ml-1">{age + ", " + gender}</p>
+        )}
+        <p className="text-lg/[25px] italic">{about}</p>
+        <div className="card-actions justify-center my-3">
           <button
-            className="btn btn-primary"
+            className="btn bg-rose-900 rounded-xl font-normal text-lg shadow-[rgba(0,0,0,0.4)_6px_6px_3px_3px] mr-3 scale-y-105 text-white border-none"
             onClick={() => handleSendRequest("ignored", _id)}
           >
-            Ignore
+            Skip
           </button>
           <button
-            className="btn btn-secondary"
+            className="btn border-none bg-lime-900 rounded-xl shadow-[rgba(0,0,0,0.4)_6px_6px_3px_3px] font-normal text-lg scale-y-105 text-white"
             onClick={() => handleSendRequest("interested", _id)}
           >
-            Interested
+            Connect
           </button>
-          </div>
         </div>
       </div>
-    );
-  };
-  export default UserCard;
+    </div>
+  );
+};
+export default UserCard;

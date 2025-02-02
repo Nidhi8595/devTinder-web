@@ -49,8 +49,7 @@ const Login = () => {
   return (
     <div className="flex justify-center text-white min-h-[500px]">
       <div
-        className="card bg-lime-950 min-w-96
-       shadow-black shadow-2xl mb-10"
+        className="card bg-lime-950 min-w-96 mt-1.5 mb-10 shadow-[rgba(0,0,0,0.6)_0px_0px_10px_10px]"
       >
         <div className="card-body">
           <h2 className="card-title justify-center">
@@ -109,7 +108,7 @@ const Login = () => {
           <p className="text-red-500">{error}</p>
           <div className="card-actions justify-center m-2">
             <button
-              className="btn btn-primary"
+              className="bg-amber-200 px-4 py-2.5 cursor-pointer shadow-gray-400 shadow-md scale-y-110 rounded-lg text-black font-semibold text-center"
               onClick={isLoginForm ? handleLogin : handleSignUp}
             >
               {isLoginForm ? "Login" : "Sign Up"}

@@ -3,7 +3,12 @@ import { BASE_URL } from "../utils/constants";
 import { useDispatch, useSelector } from "react-redux";
 import { addRequests, removeRequest } from "../utils/requestSlice";
 import { useEffect, useState } from "react";
+import UserCard from "./UserCard";
+import Modal from "./Modal";
+
 const Requests = () => {
+  const [showModal, setShowModal] = useState(false);
+  const [selectedConnection, setSelectedConnection] = useState(null);
   const requests = useSelector((store) => store.requests);
   const dispatch = useDispatch();
 
@@ -29,51 +34,77 @@ const Requests = () => {
   useEffect(() => {
     fetchRequests();
   }, []);
+
+  const handleModalOpen = (connection) => {
+    setSelectedConnection(connection);
+    setShowModal(true);
+  };
+
+  const handleModalClose = () => {
+    setShowModal(false);
+    setSelectedConnection(null);
+  };
   if (!requests) return;
   if (requests.length === 0)
-    return <h1 className="text-bold text-center py-56 text-white text-3xl scale-y-110 min-h-[500px]"> No Requests Found</h1>;
+    return (
+      <h1 className="text-bold text-center py-56 text-white text-3xl scale-y-110 min-h-[500px]">
+        {" "}
+        No Requests Found
+      </h1>
+    );
   return (
     <div className="text-center my-4 pb-2 min-h-[500px]">
-      <h1 className="text-bold text-white text-3xl scale-y-110">Connection Requests</h1>
+      <h1 className="text-white text-shadow shadow-black italic text-3xl scale-y-110">
+        Handshake Queue
+      </h1>
       {requests.map((request) => {
         const { _id, firstName, lastName, photoUrl, age, gender, about } =
           request.fromUserId;
         return (
           <div
             key={_id}
-            className=" flex my-4 p-4 w-4/5 justify-between rounded-xl bg-red-200 mx-auto text-black shadow-slate-900 shadow-2xl"
+            className=" flex my-5 p-4 md:w-3/6 w-5/6 justify-between rounded-xl shadow-[rgba(0,0,0,0.5)_0px_0px_10px_10px] bg-red-200 mx-auto text-black"
           >
             <div>
               <img
                 alt="photo"
-                className="w-20 h-20 rounded-full"
+                className="w-16 h-16 rounded-full object-cover cursor-pointer"
                 src={photoUrl}
+                onClick={() => handleModalOpen(request.fromUserId)} // Open modal on click
               />
             </div>
-            <div className="text-left ml-2 mr-1 ">
-              <h2 className="font-bold text-xl">
+            <div className="text-left">
+              <h2 className="font-semibold text-shadow shadow-gray-500 text-xl mb-[1px]">
                 {firstName + " " + lastName}
               </h2>
-              {age && gender && <p className="text-slate-700">{age + ", " + gender}</p>}
-              <p>{about}</p>
+              {age && gender && (
+                <p className="text-purple-900 font-semibold italic">
+                  {age + ", " + gender}
+                </p>
+              )}
+              {/* <p className="text-purple-900">{about}</p> */}
             </div>
-            <div>
-            <button
-                className="btn btn-primary m-1"
+            <div className="flex">
+              <button
+                className="btn h-[35px] mb-1.5 bg-rose-900 rounded-xl md:scale-y-105 font-normal md:text-lg shadow-[rgba(0,0,0,0.4)_6px_6px_3px_3px] mr-3 scale-y-90 tracking-widest md:text-white text-white border-none"
                 onClick={() => reviewRequest("rejected", request._id)}
               >
-                Reject
+                Deny
               </button>
               <button
-                className="btn btn-secondary m-1"
+                className="btn border-none bg-lime-900 rounded-xl shadow-[rgba(0,0,0,0.4)_6px_6px_3px_3px] md:scale-y-105 font-normal scale-y-90 tracking-widest md:text-lg md:text-white text-white"
                 onClick={() => reviewRequest("accepted", request._id)}
               >
-                Accept
+                Merge
               </button>
             </div>
           </div>
         );
       })}
+
+      <Modal show={showModal} onClose={handleModalClose}>
+        {selectedConnection && <UserCard user={selectedConnection} />}
+      </Modal>
     </div>
   );
 };

@@ -31,11 +31,9 @@ const Body = () => {
     fetchUser();
   }, []);
   return (
-    <div className="bg-slate-600">
-      <NavBar />
-      <Outlet />
-      <Footer />
-    </div>
+    
+      <div className="bg-gradient-to-bl from-zinc-800 via-indigo-300 to-amber-600"><NavBar /><Outlet /><Footer /></div>
+    
   );
 };
 export default Body;
