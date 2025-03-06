@@ -12,31 +12,34 @@ const EditProfile = ({ user }) => {
   const [age, setAge] = useState(user.age || "");
   const [gender, setGender] = useState(user.gender || "");
   const [about, setAbout] = useState(user.about || "");
+  const [skills, setSkills] = useState(user.skills || []);
+  const [skillsInput, setSkillsInput] = useState("");
   const [error, setError] = useState("");
   const dispatch = useDispatch();
   const [showToast, setShowToast] = useState(false);
 
+  const addSkill = () => {
+    if (skillsInput && !skills.includes(skillsInput)) {
+      setSkills([...skills, skillsInput]);
+      setSkillsInput("");
+    }
+  };
+
+  const removeSkill = (skillToRemove) => {
+    setSkills(skills.filter((skill) => skill !== skillToRemove));
+  };
+
   const saveProfile = async () => {
-    //Clear Errors
     setError("");
     try {
       const res = await axios.patch(
         BASE_URL + "/profile/edit",
-        {
-          firstName,
-          lastName,
-          photoUrl,
-          age,
-          gender,
-          about,
-        },
+        { firstName, lastName, photoUrl, age, gender, about, skills },
         { withCredentials: true }
       );
       dispatch(addUser(res?.data?.data));
       setShowToast(true);
-      setTimeout(() => {
-        setShowToast(false);
-      }, 3000);
+      setTimeout(() => setShowToast(false), 3000);
     } catch (err) {
       setError(err.response.data);
     }
@@ -62,7 +65,7 @@ const EditProfile = ({ user }) => {
                   />
                 </label>
                 <label className="form-control w-full max-w-xs my-2">
-                  <label className="form-control w-full max-w-xs my-2">
+                <label className="form-control w-full max-w-xs my-2">
                     <div className="label">
                       <span className="label-text">Last Name:</span>
                     </div>
@@ -116,6 +119,22 @@ const EditProfile = ({ user }) => {
                     onChange={(e) => setAbout(e.target.value)}
                   />
                 </label>
+                <label className="form-control w-full max-w-xs my-2">
+                  <div className="label">
+                    <span className="label-text">Skills:</span>
+                  </div>
+                  <div className="flex space-x-2">
+                    <input
+                      type="text"
+                      value={skillsInput}
+                      className="input input-bordered w-full max-w-xs"
+                      onChange={(e) => setSkillsInput(e.target.value)}
+                    />
+                    <button className="btn bg-blue-500 text-white" onClick={addSkill}>
+                      Add Skill
+                    </button>
+                  </div>
+                </label>
               </div>
               <p className="text-red-500">{error}</p>
               <div className="card-actions justify-center m-2">
@@ -126,10 +145,14 @@ const EditProfile = ({ user }) => {
             </div>
           </div>
         </div>
+
         <UserCard
-          user={{ firstName, lastName, photoUrl, age, gender, about }}
+          user={{ firstName, lastName, photoUrl, age, gender, about, skills }}
+          isEditing={true}
+          removeSkill={removeSkill}
         />
       </div>
+
       {showToast && (
         <div className="toast toast-top toast-center">
           <div className="alert alert-success">
@@ -140,4 +163,5 @@ const EditProfile = ({ user }) => {
     </>
   );
 };
+
 export default EditProfile;
