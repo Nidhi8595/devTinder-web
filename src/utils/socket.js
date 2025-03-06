@@ -1,6 +1,6 @@
 import { io } from "socket.io-client";
 
-const socket = io("http://localhost:7777", {
+const socket = io(BASE_URL, {
   transports: ["websocket", "polling"],
   withCredentials: true,
 });
